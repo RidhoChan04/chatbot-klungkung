@@ -1,0 +1,10 @@
+fastapi 
+uvicorn 
+langchain 
+langchain-chroma 
+langchain-google-genai 
+chromadb
+unstructured[all-docs] 
+pillow 
+lxml 
+pillow
