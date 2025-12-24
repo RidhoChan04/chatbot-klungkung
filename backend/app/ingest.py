@@ -183,21 +183,5 @@ def run_ingestion():
     
     print("Ingestion berhasil")
 
-    
-
-    
-
-
-# =========================
-# AUTO RUN ON IMPORT/STARTUP
-# =========================
-# Ini trik agar saat Uvicorn jalan, ingestion langsung dieksekusi
-# dan InMemoryStore terisi di RAM yang sama dengan aplikasi.
-
-print("--- SYSTEM STARTUP: Memulai Ingestion PDF ---")
-try:
-    # Jalankan fungsi ingestion yang sudah kamu buat di atas
+if __name__ == "__main__":
     run_ingestion()
-    print("--- SYSTEM STARTUP: Ingestion Berhasil & Data Siap ---")
-except Exception as e:
-    print(f"--- SYSTEM ERROR: Ingestion Gagal: {e} ---")
