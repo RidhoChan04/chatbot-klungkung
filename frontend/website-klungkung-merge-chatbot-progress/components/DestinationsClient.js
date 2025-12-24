@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, Suspense } from "react"; // <--- Tambah Suspense
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useLang } from "@/components/Language";
@@ -32,7 +32,8 @@ function normalizeLabel(lang, key) {
   return found ? (lang === "id" ? found.nameId : found.nameEn) : key;
 }
 
-export default function DestinationsClient() {
+// 1. Ganti nama komponen asli jadi "DestinationsContent"
+function DestinationsContent() {
   const { lang, t } = useLang();
   /* Router state */
   const router = useRouter();
@@ -228,5 +229,14 @@ export default function DestinationsClient() {
         </>
       )}
     </section>
+  );
+}
+
+// 2. Export default baru yang membungkus komponen asli dengan Suspense
+export default function DestinationsClient() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-slate-600">Loading destinations...</div>}>
+      <DestinationsContent />
+    </Suspense>
   );
 }
