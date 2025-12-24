@@ -1,5 +1,6 @@
 [phases.setup]
-nixPkgs = ["python311", "poppler_utils", "tesseract", "libmagic"]
+# GANTI 'libmagic' MENJADI 'file'
+nixPkgs = ["python311", "poppler_utils", "tesseract", "file"]
 
 [phases.install]
 cmds = ["python -m venv .venv && . .venv/bin/activate && pip install -r requirements.txt"]
