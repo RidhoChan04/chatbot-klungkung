@@ -35,4 +35,4 @@ RUN pip uninstall -y nvidia-cublas-cu12 nvidia-cudnn-cu12 nvidia-cuda-runtime-cu
 COPY . .
 
 # 7. Jalankan
-CMD uvicorn app.main:app --host 0.0.0.0 --port $PORT
+CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8080}"]
