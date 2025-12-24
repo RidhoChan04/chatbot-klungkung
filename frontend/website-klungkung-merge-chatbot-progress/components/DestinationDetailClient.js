@@ -36,17 +36,12 @@ export default function DestinationDetailClient({ item }) {
   const itemName = lang === "id" ? item.name : (item.nameEn || item.name);
   const itemHours = lang === "id" ? item.hours : (item.hoursEn || item.hours);
   const itemPrice = lang === "id" ? item.price : (item.priceEn || item.price);
-  /* Fallback hero image by category */
-  const fallbackByCategory = {
-    wisata: "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1800&q=70",
-    budaya: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=1800&q=70",
-    kuliner: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=1800&q=70",
-    suvenir: "https://images.unsplash.com/photo-1520975958225-17c75f6f1f63?auto=format&fit=crop&w=1800&q=70",
-  };
+  const categoryImageByKey = Object.fromEntries(
+    DEST_CATEGORIES.filter((category) => category.image).map((category) => [category.key, category.image])
+  );
+  const fallbackImage = categoryImageByKey[item.category] || categoryImageByKey.wisata || "";
   /* Media selection: prefer item media, fallback by category */
-  const heroImage = item.media && item.media.startsWith("http")
-    ? item.media
-    : (fallbackByCategory[item.category] || fallbackByCategory.wisata);
+  const heroImage = item.media || fallbackImage;
 
   return (
     <section className="relative min-h-screen w-screen px-6 sm:px-10 pt-12 pb-0">

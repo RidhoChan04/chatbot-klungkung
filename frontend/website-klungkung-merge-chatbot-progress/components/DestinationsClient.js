@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState, Suspense } from "react"; // <--- Tambah Suspense
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useLang } from "@/components/Language";
@@ -16,15 +16,10 @@ const tabs = [
   { key: "suvenir", href: "/destinasi?cat=suvenir" },
 ];
 
-/* Background imagery per category */
-const imgByCategory = {
-  wisata: "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1200&q=70",
-  budaya: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=1200&q=70",
-  kuliner: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=1200&q=70",
-  suvenir: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=1200&q=70",
-};
-/* Generic fallback for cards */
-const fallbackImage = "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=70";
+const categoryImageByKey = Object.fromEntries(
+  DEST_CATEGORIES.filter((category) => category.image).map((category) => [category.key, category.image])
+);
+const fallbackImage = categoryImageByKey.wisata || Object.values(categoryImageByKey)[0] || "";
 
 /* Normalize label by language */
 function normalizeLabel(lang, key) {
@@ -32,8 +27,7 @@ function normalizeLabel(lang, key) {
   return found ? (lang === "id" ? found.nameId : found.nameEn) : key;
 }
 
-// 1. Ganti nama komponen asli jadi "DestinationsContent"
-function DestinationsContent() {
+export default function DestinationsClient() {
   const { lang, t } = useLang();
   /* Router state */
   const router = useRouter();
@@ -63,13 +57,11 @@ function DestinationsContent() {
   }
 
   /* Card menu entries for initial screen */
-  const categoryCards = [
-    { key: "peta", href: "/destinasi/peta", image: "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?auto=format&fit=crop&w=1200&q=70" },
-    { key: "wisata", href: "/destinasi?cat=wisata", image: imgByCategory.wisata },
-    { key: "budaya", href: "/destinasi?cat=budaya", image: imgByCategory.budaya },
-    { key: "kuliner", href: "/destinasi?cat=kuliner", image: imgByCategory.kuliner },
-    { key: "suvenir", href: "/destinasi?cat=suvenir", image: imgByCategory.suvenir },
-  ];
+  const categoryCards = DEST_CATEGORIES.map((category) => ({
+    key: category.key,
+    href: category.href,
+    image: category.image,
+  }));
 
   /* Localization helpers */
   function getItemName(item) {
@@ -92,7 +84,7 @@ function DestinationsContent() {
     <section className="relative min-h-screen w-screen px-6 sm:px-10 pt-12 pb-0">
       <div
         className="absolute inset-0 -z-10 bg-cover bg-center blur-sm opacity-30"
-        style={{ backgroundImage: `url(${imgByCategory[cat] || imgByCategory.wisata})` }}
+        style={{ backgroundImage: `url(${categoryImageByKey[cat] || fallbackImage})` }}
       />
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-white/85 via-white/70 to-white/75" />
 
@@ -122,10 +114,8 @@ function DestinationsContent() {
 
           <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filtered.map(item => {
-              const itemImage = item.media && item.media.startsWith("http")
-                ? item.media
-                : (imgByCategory[item.category] || imgByCategory.wisata);
-              const itemFallback = imgByCategory[item.category] || fallbackImage;
+              const itemImage = item.media || categoryImageByKey[item.category] || fallbackImage;
+              const itemFallback = categoryImageByKey[item.category] || fallbackImage;
               return (
                 <div key={item.id} className="rounded-3xl bg-white/80 border border-white/60 shadow-[0_18px_45px_rgba(2,6,23,0.18)] overflow-hidden">
                   <div className="relative h-44">
@@ -229,14 +219,5 @@ function DestinationsContent() {
         </>
       )}
     </section>
-  );
-}
-
-// 2. Export default baru yang membungkus komponen asli dengan Suspense
-export default function DestinationsClient() {
-  return (
-    <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-slate-600">Loading destinations...</div>}>
-      <DestinationsContent />
-    </Suspense>
   );
 }

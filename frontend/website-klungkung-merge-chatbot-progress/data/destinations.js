@@ -1,310 +1,40 @@
-export const DEST_CATEGORIES = [
-  { key: "peta", nameId: "Peta Interaktif", nameEn: "Interactive Map", href: "/destinasi/peta" },
-  { key: "wisata", nameId: "Wisata", nameEn: "Destinations", href: "/destinasi?cat=wisata" },
-  { key: "budaya", nameId: "Wisata Budaya", nameEn: "Cultural", href: "/destinasi?cat=budaya" },
-  { key: "kuliner", nameId: "Wisata Kuliner", nameEn: "Culinary", href: "/destinasi?cat=kuliner" },
-  { key: "suvenir", nameId: "Suvenir", nameEn: "Souvenirs", href: "/destinasi?cat=suvenir" },
-];
+import data from "@/data/destinations.json";
+import airTerjunPeguyanganImage from "@/assets/air-terjun-peguyangan.jpeg";
+import bukitTeletubisImage from "@/assets/bukit-teletubis.jpg";
+import kertaGosaImage from "@/assets/kerta-gosa.jpg";
+import nusaPenidaImage from "@/assets/nusa-penida.jpg";
+import pantaiAtuhImage from "@/assets/pantai-atuh.jpg";
+import pantaiCrystalBayImage from "@/assets/pantai-crystal-bay.jpg";
+import pantaiDiamondImage from "@/assets/pantai-diamond.jpeg";
+import pantaiKusambaImage from "@/assets/pantai-kusamba.jpg";
+import pantaiNusaLembonganImage from "@/assets/pantai-nusa-lembongan.jpg";
+import pasarSeniImage from "@/assets/pasar-seni.jpg";
+import puraGoaLawahImage from "@/assets/pura-goa-lawah.jpg";
+import puraPenataranImage from "@/assets/pura-penataran.jpg";
+import warungLawarImage from "@/assets/warung-lawar.jpeg";
 
-export const DESTINATIONS = [
-  {
-    id: "pantai-kusamba",
-    name: "Pantai Kusamba",
-    nameEn: "Kusamba Beach",
-    category: "wisata",
-    short: "Pantai pasir hitam, suasana nelayan, panorama laut dramatis.",
-    shortEn: "Black sand beach, fishing village vibe, dramatic sea views.",
-    address: "Kusamba, Klungkung, Bali",
-    hours: "08:00 - 18:00",
-    hoursEn: "08:00 - 18:00",
-    price: "Gratis",
-    priceEn: "Free",
-    lat: -8.5452,
-    lng: 115.4462,
-    media: "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1600&q=70",
-    description:
-      "Pantai Kusamba terkenal dengan pasir hitam, aktivitas nelayan, dan suasana sunset yang tenang. Cocok untuk jalan santai dan foto.",
-    descriptionEn:
-      "Kusamba Beach is known for its black sand, fishing activity, and calm sunset atmosphere. Ideal for walks and photos.",
-  },
-  {
-    id: "kerta-ghosa",
-    name: "Kerta Gosa",
-    nameEn: "Kerta Gosa",
-    category: "budaya",
-    short: "Sejarah kerajaan + lukisan Wayang Kamasan.",
-    shortEn: "Royal history + Wayang Kamasan murals.",
-    address: "Semarapura, Klungkung, Bali",
-    hours: "08:00 - 17:00",
-    hoursEn: "08:00 - 17:00",
-    price: "Rp 20.000",
-    priceEn: "IDR 20,000",
-    lat: -8.5387,
-    lng: 115.4059,
-    media: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=1600&q=70",
-    description:
-      "Kertha Gosa adalah kompleks bersejarah peninggalan kerajaan Klungkung. Daya tariknya adalah langit-langit bergambar Wayang Kamasan yang menceritakan nilai moral dan sejarah lokal.",
-    descriptionEn:
-      "Kerta Gosa is a historic royal complex of Klungkung. Its highlight is the Wayang Kamasan ceiling murals that depict moral lessons and local history.",
-  },
-  {
-    id: "nusa-penida",
-    name: "Nusa Penida Viewpoint",
-    nameEn: "Kelingking Beach Viewpoint",
-    category: "wisata",
-    short: "Tebing ikonik, panorama laut dramatis.",
-    shortEn: "Iconic T-Rex cliff, dramatic ocean panorama.",
-    address: "Nusa Penida, Klungkung, Bali",
-    hours: "06:00 - 18:00",
-    hoursEn: "06:00 - 18:00",
-    price: "Rp 25.000",
-    priceEn: "IDR 25,000",
-    lat: -8.7273,
-    lng: 115.5444,
-    media: "https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=1600&q=70",
-    description:
-      "Pantai Kelingking: tebing ikonik mirip T-Rex dengan panorama laut dramatis. Area ini populer untuk foto dan menikmati pemandangan alam.",
-    descriptionEn:
-      "Kelingking Beach: an iconic T-Rex-like cliff with dramatic ocean views. A favorite spot for photos and nature scenery.",
-  },
-  {
-    id: "pantai-crystal-bay",
-    name: "Pantai Crystal Bay",
-    nameEn: "Crystal Bay Beach",
-    category: "wisata",
-    short: "Snorkeling, diving, sunset.",
-    shortEn: "Snorkeling, diving, sunset.",
-    address: "Nusa Penida, Klungkung, Bali",
-    hours: "07:00 - 18:00",
-    hoursEn: "07:00 - 18:00",
-    price: "Gratis",
-    priceEn: "Free",
-    lat: -8.7158,
-    lng: 115.4556,
-    media: "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1600&q=70",
-    description:
-      "Pantai Crystal Bay terkenal untuk snorkeling dan diving, serta sunset yang indah. Air jernih dan suasana tenang cocok untuk wisata alam.",
-    descriptionEn:
-      "Crystal Bay is known for snorkeling and diving, plus beautiful sunsets. Clear water and a calm vibe make it perfect for nature trips.",
-  },
-  {
-    id: "pantai-atuh",
-    name: "Pantai Atuh",
-    nameEn: "Atuh Beach",
-    category: "wisata",
-    short: "Tebing menjulang, sunrise.",
-    shortEn: "Towering cliffs, sunrise views.",
-    address: "Nusa Penida, Klungkung, Bali",
-    hours: "06:00 - 18:00",
-    hoursEn: "06:00 - 18:00",
-    price: "Rp 20.000",
-    priceEn: "IDR 20,000",
-    lat: -8.7612,
-    lng: 115.6227,
-    media: "https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=1600&q=70",
-    description:
-      "Pantai Atuh menawarkan tebing menjulang dan panorama sunrise. Cocok untuk menikmati alam dan fotografi.",
-    descriptionEn:
-      "Atuh Beach offers towering cliffs and sunrise panoramas. Great for nature lovers and photography.",
-  },
-  {
-    id: "pantai-diamond",
-    name: "Pantai Diamond",
-    nameEn: "Diamond Beach",
-    category: "wisata",
-    short: "Tangga tebing, pasir putih, foto eksotis.",
-    shortEn: "Cliff stairs, white sand, exotic photo spots.",
-    address: "Nusa Penida, Klungkung, Bali",
-    hours: "06:00 - 18:00",
-    hoursEn: "06:00 - 18:00",
-    price: "Rp 25.000",
-    priceEn: "IDR 25,000",
-    lat: -8.7704,
-    lng: 115.6201,
-    media: "https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=1600&q=70",
-    description:
-      "Pantai Diamond dikenal dengan tangga tebing dan pasir putih. Spot foto eksotis dengan view laut biru.",
-    descriptionEn:
-      "Diamond Beach is famous for its cliff stairs and white sand. An exotic photo spot with blue ocean views.",
-  },
-  {
-    id: "pantai-nusa-lembongan",
-    name: "Pantai Nusa Lembongan",
-    nameEn: "Nusa Lembongan Beach",
-    category: "wisata",
-    short: "Pantai santai + aktivitas laut.",
-    shortEn: "Relaxed beach + sea activities.",
-    address: "Nusa Lembongan, Klungkung, Bali",
-    hours: "07:00 - 18:00",
-    hoursEn: "07:00 - 18:00",
-    price: "Gratis",
-    priceEn: "Free",
-    lat: -8.6817,
-    lng: 115.4447,
-    media: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=70",
-    description:
-      "Pantai Nusa Lembongan cocok untuk santai, bermain air, dan aktivitas laut. Suasana pantai tenang dan family-friendly.",
-    descriptionEn:
-      "Nusa Lembongan Beach is ideal for relaxing, swimming, and sea activities. Calm, family-friendly atmosphere.",
-  },
-  {
-    id: "air-terjun-peguyangan",
-    name: "Air Terjun Peguyangan",
-    nameEn: "Peguyangan Waterfall",
-    category: "wisata",
-    short: "Tangga biru + air terjun laut (alam & petualangan).",
-    shortEn: "Blue stairs + sea waterfall (nature & adventure).",
-    address: "Nusa Penida, Klungkung, Bali",
-    hours: "07:00 - 17:00",
-    hoursEn: "07:00 - 17:00",
-    price: "Rp 20.000",
-    priceEn: "IDR 20,000",
-    lat: -8.7880,
-    lng: 115.5100,
-    media: "https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=1600&q=70",
-    description:
-      "Peguyangan terkenal dengan tangga biru menuju spot air terjun laut. Trek menantang, cocok untuk pecinta alam dan petualangan.",
-    descriptionEn:
-      "Peguyangan is known for its blue stairs leading to a sea waterfall. The trek is challenging, great for nature and adventure lovers.",
-  },
-  {
-    id: "bukit-teletubbies",
-    name: "Bukit Teletubbies",
-    nameEn: "Teletubbies Hill",
-    category: "wisata",
-    short: "Bukit hijau bergelombang, spot drone.",
-    shortEn: "Rolling green hills, drone spot.",
-    address: "Nusa Penida, Klungkung, Bali",
-    hours: "06:00 - 18:00",
-    hoursEn: "06:00 - 18:00",
-    price: "Gratis",
-    priceEn: "Free",
-    lat: -8.7463,
-    lng: 115.5122,
-    media: "https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=1600&q=70",
-    description:
-      "Bukit Teletubbies menyajikan perbukitan hijau bergelombang. Spot favorit untuk drone dan foto panorama.",
-    descriptionEn:
-      "Teletubbies Hill offers rolling green hills. A favorite spot for drone shots and panoramic photos.",
-  },
-  {
-    id: "pura-penataran-agung-ped",
-    name: "Pura Penataran Agung Ped",
-    nameEn: "Penataran Agung Ped Temple",
-    category: "budaya",
-    short: "Pusat spiritual Nusa Penida.",
-    shortEn: "Spiritual center of Nusa Penida.",
-    address: "Nusa Penida, Klungkung, Bali",
-    hours: "08:00 - 18:00",
-    hoursEn: "08:00 - 18:00",
-    price: "Donasi",
-    priceEn: "Donation",
-    lat: -8.7249,
-    lng: 115.4797,
-    media: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=1600&q=70",
-    description:
-      "Pura Penataran Agung Ped adalah pusat spiritual di Nusa Penida. Nuansa religi kental dan sering menjadi tujuan ziarah.",
-    descriptionEn:
-      "Penataran Agung Ped Temple is the spiritual center of Nusa Penida. A strong religious atmosphere and a popular pilgrimage destination.",
-  },
-  {
-    id: "warung-lawar",
-    name: "Warung Lawar Klungkung",
-    nameEn: "Klungkung Lawar Warung",
-    category: "kuliner",
-    short: "Kuliner lawar khas Bali, porsi mantap.",
-    shortEn: "Balinese lawar specialty, hearty portions.",
-    address: "Semarapura, Klungkung, Bali",
-    hours: "10:00 - 21:00",
-    hoursEn: "10:00 - 21:00",
-    price: "Rp 25.000 - Rp 40.000",
-    priceEn: "IDR 25,000 - 40,000",
-    lat: -8.5403,
-    lng: 115.4102,
-    media: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=1600&q=70",
-    description:
-      "Lawar adalah campuran sayur, kelapa parut, dan bumbu khas. Di sini kamu bisa menemukan versi yang ramah wisatawan (dummy).",
-    descriptionEn:
-      "Lawar is a mix of vegetables, grated coconut, and local spices. This place serves a visitor-friendly version (dummy).",
-  },
-  {
-    id: "kopi-penida",
-    name: "Kopi Penida",
-    nameEn: "Kopi Penida",
-    category: "kuliner",
-    short: "Kopi lokal dengan view santai (dummy).",
-    shortEn: "Local coffee with a relaxed view (dummy).",
-    address: "Nusa Penida, Klungkung, Bali",
-    hours: "09:00 - 20:00",
-    hoursEn: "09:00 - 20:00",
-    price: "Rp 18.000 - Rp 35.000",
-    priceEn: "IDR 18,000 - 35,000",
-    lat: -8.7320,
-    lng: 115.5330,
-    media: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1600&q=70",
-    description:
-      "Kafe kopi lokal untuk istirahat sejenak. Contoh data dummy untuk fitur filter, search, dan detail.",
-    descriptionEn:
-      "A local coffee spot for a short break. Dummy data for filter, search, and detail features.",
-  },
-  {
-    id: "pasar-seni",
-    name: "Pasar Seni Semarapura",
-    nameEn: "Semarapura Art Market",
-    category: "suvenir",
-    short: "Kerajinan, kain, dan oleh-oleh lokal.",
-    shortEn: "Handicrafts, textiles, and local souvenirs.",
-    address: "Semarapura, Klungkung, Bali",
-    hours: "07:00 - 16:00",
-    hoursEn: "07:00 - 16:00",
-    price: "Tergantung produk",
-    priceEn: "Depends on product",
-    lat: -8.5400,
-    lng: 115.4067,
-    media: "https://images.unsplash.com/photo-1520975958225-17c75f6f1f63?auto=format&fit=crop&w=1600&q=70",
-    description:
-      "Berburu suvenir khas seperti kain, kerajinan tangan, dan pernak-pernik. Cocok untuk belanja oleh-oleh.",
-    descriptionEn:
-      "Find local souvenirs like textiles, handicrafts, and small gifts. Great for souvenir shopping.",
-  },
-  {
-    id: "tenun-endek",
-    name: "Galeri Tenun Endek",
-    nameEn: "Endek Weaving Gallery",
-    category: "suvenir",
-    short: "Koleksi kain endek dan proses pembuatan (dummy).",
-    shortEn: "Endek textile collection and weaving process (dummy).",
-    address: "Klungkung, Bali",
-    hours: "09:00 - 17:00",
-    hoursEn: "09:00 - 17:00",
-    price: "Mulai Rp 150.000",
-    priceEn: "From IDR 150,000",
-    lat: -8.5350,
-    lng: 115.4150,
-    media: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=1600&q=70",
-    description:
-      "Melihat koleksi endek dan belajar singkat tentang motif. Data dummy untuk prototipe UI.",
-    descriptionEn:
-      "See endek collections and learn briefly about the patterns. Dummy data for UI prototype.",
-  },
-  {
-    id: "pura-goa-lawah",
-    name: "Pura Goa Lawah",
-    nameEn: "Goa Lawah Temple",
-    category: "budaya",
-    short: "Pura Sad Kahyangan dengan goa kelelawar.",
-    shortEn: "Sad Kahyangan temple with a bat cave.",
-    address: "Dawan, Klungkung, Bali",
-    hours: "08:00 - 18:00",
-    hoursEn: "08:00 - 18:00",
-    price: "Donasi",
-    priceEn: "Donation",
-    lat: -8.5536,
-    lng: 115.4247,
-    media: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=70",
-    description:
-      "Pura Goa Lawah termasuk Pura Sad Kahyangan dengan goa kelelawar. Nuansa spiritual kuat, cocok untuk wisata budaya & religi.",
-    descriptionEn:
-      "Goa Lawah Temple is part of the Sad Kahyangan temples with a bat cave. A strong spiritual vibe for cultural and religious visits.",
-  },
-];
+const imagesByFile = {
+  "air-terjun-peguyangan.jpeg": airTerjunPeguyanganImage.src,
+  "bukit-teletubis.jpg": bukitTeletubisImage.src,
+  "kerta-gosa.jpg": kertaGosaImage.src,
+  "nusa-penida.jpg": nusaPenidaImage.src,
+  "pantai-atuh.jpg": pantaiAtuhImage.src,
+  "pantai-crystal-bay.jpg": pantaiCrystalBayImage.src,
+  "pantai-diamond.jpeg": pantaiDiamondImage.src,
+  "pantai-kusamba.jpg": pantaiKusambaImage.src,
+  "pantai-nusa-lembongan.jpg": pantaiNusaLembonganImage.src,
+  "pasar-seni.jpg": pasarSeniImage.src,
+  "pura-goa-lawah.jpg": puraGoaLawahImage.src,
+  "pura-penataran.jpg": puraPenataranImage.src,
+  "warung-lawar.jpeg": warungLawarImage.src,
+};
+
+export const DEST_CATEGORIES = data.categories.map((category) => ({
+  ...category,
+  image: imagesByFile[category.image] || category.image,
+}));
+
+export const DESTINATIONS = data.items.map((item) => ({
+  ...item,
+  media: imagesByFile[item.media] || item.media,
+}));

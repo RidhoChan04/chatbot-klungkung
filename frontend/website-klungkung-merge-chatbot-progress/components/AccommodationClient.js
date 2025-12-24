@@ -41,6 +41,16 @@ export default function AccommodationClient() {
   const getName = (item) => (lang === "id" ? item.name : (item.nameEn || item.name));
   const getDesc = (item) => (lang === "id" ? item.desc : (item.descEn || item.desc));
   const getPrice = (item) => (lang === "id" ? item.price : (item.priceEn || item.price));
+  const hasPrice = (item) => Boolean(item.price || item.priceEn);
+  const hasContact = (item) => Boolean(item.contact);
+  const getAccess = (item) => item.access;
+  const getNote = (item) => (lang === "id" ? item.note : (item.noteEn || item.note));
+  const getWhatsapp = (item) => normalizePhone(item.contact || "");
+  const buildBackgroundImage = (primary) => {
+    const safePrimary = primary ? encodeURI(primary) : fallbackImage;
+    const safeFallback = encodeURI(fallbackImage);
+    return `url("${safePrimary}"), url("${safeFallback}")`;
+  };
 
   function renderDetailCard(item, className = "") {
     if (!item) return null;
@@ -49,7 +59,7 @@ export default function AccommodationClient() {
         <div className="relative h-44">
           <div
             className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url(${item.image || fallbackImage}), url(${fallbackImage})` }}
+            style={{ backgroundImage: buildBackgroundImage(item.image) }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-transparent" />
           <div className="absolute bottom-3 left-3 rounded-full bg-white/80 px-4 py-2 text-xs font-semibold text-slate-900">
@@ -61,8 +71,18 @@ export default function AccommodationClient() {
             <div className="font-bold text-slate-900">{getName(item)}</div>
             <div>{getDesc(item)}</div>
             <div><span className="font-semibold">{lang === "id" ? "Lokasi" : "Location"}:</span> {item.location}</div>
-            <div><span className="font-semibold">{lang === "id" ? "Harga" : "Price"}:</span> {getPrice(item)}</div>
-            <div><span className="font-semibold">{lang === "id" ? "Kontak" : "Contact"}:</span> {item.contact}</div>
+            {hasPrice(item) ? (
+              <div><span className="font-semibold">{lang === "id" ? "Harga" : "Price"}:</span> {getPrice(item)}</div>
+            ) : null}
+            {hasContact(item) ? (
+              <div><span className="font-semibold">{lang === "id" ? "Kontak" : "Contact"}:</span> {item.contact}</div>
+            ) : null}
+            {getAccess(item) ? (
+              <div><span className="font-semibold">{lang === "id" ? "Akses" : "Access"}:</span> {getAccess(item)}</div>
+            ) : null}
+            {getNote(item) ? (
+              <div><span className="font-semibold">{lang === "id" ? "Catatan" : "Notes"}:</span> {getNote(item)}</div>
+            ) : null}
             <div className="mt-3 flex gap-2">
               <a
                 /* UX: direction CTA */
@@ -73,15 +93,17 @@ export default function AccommodationClient() {
               >
                 {t.common.direction}
               </a>
-              <a
-                /* UX: WhatsApp CTA */
-                className="flex-1 text-center rounded-xl bg-white border border-slate-200 px-4 py-3 font-bold text-slate-900"
-                href={`https://wa.me/${normalizePhone(item.contact)}`}
-                target="_blank"
-                rel="noreferrer"
-              >
-                WhatsApp
-              </a>
+              {getWhatsapp(item) ? (
+                <a
+                  /* UX: WhatsApp CTA */
+                  className="flex-1 text-center rounded-xl bg-white border border-slate-200 px-4 py-3 font-bold text-slate-900"
+                  href={`https://wa.me/${getWhatsapp(item)}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  WhatsApp
+                </a>
+              ) : null}
             </div>
           </div>
         </div>
@@ -101,7 +123,7 @@ export default function AccommodationClient() {
     <section className="min-h-screen w-screen px-6 sm:px-10 pt-12 pb-0">
       <SectionTitle
         title={lang === "id" ? "Akomodasi" : "Accommodations"}
-        subtitle={lang === "id" ? "Penginapan dan transportasi sesuai kategori (dummy)." : "Stays and transport by category (dummy)."}
+        subtitle={lang === "id" ? "Penginapan dan transportasi sesuai kategori." : "Stays and transport by category."}
       />
 
       <div className="rounded-2xl bg-white/70 border border-white/60 shadow-[0_18px_45px_rgba(2,6,23,0.18)] p-4">
@@ -144,7 +166,7 @@ export default function AccommodationClient() {
                   <div className="relative h-36">
                     <div
                       className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-[1.06]"
-                      style={{ backgroundImage: `url(${cardImage}), url(${fallbackImage})` }}
+                      style={{ backgroundImage: buildBackgroundImage(cardImage) }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-transparent" />
                     <div className="absolute bottom-3 left-3 rounded-full bg-white/85 px-3 py-1 text-xs font-semibold text-slate-900">
@@ -155,7 +177,7 @@ export default function AccommodationClient() {
                     <div className="font-bold text-slate-900">{getName(item)}</div>
                     <p className="text-sm text-slate-600 mt-1">{getDesc(item)}</p>
                     <div className="mt-3 flex flex-wrap gap-2">
-                      <Pill>{getPrice(item)}</Pill>
+                      {hasPrice(item) ? <Pill>{getPrice(item)}</Pill> : null}
                       <Pill>{item.location}</Pill>
                     </div>
                   </div>
@@ -174,8 +196,18 @@ export default function AccommodationClient() {
                     </div>
                     <div className="text-sm text-slate-700 space-y-2">
                       <div><span className="font-semibold">{lang === "id" ? "Lokasi" : "Location"}:</span> {item.location}</div>
-                      <div><span className="font-semibold">{lang === "id" ? "Harga" : "Price"}:</span> {getPrice(item)}</div>
-                      <div><span className="font-semibold">{lang === "id" ? "Kontak" : "Contact"}:</span> {item.contact}</div>
+                      {hasPrice(item) ? (
+                        <div><span className="font-semibold">{lang === "id" ? "Harga" : "Price"}:</span> {getPrice(item)}</div>
+                      ) : null}
+                      {hasContact(item) ? (
+                        <div><span className="font-semibold">{lang === "id" ? "Kontak" : "Contact"}:</span> {item.contact}</div>
+                      ) : null}
+                      {getAccess(item) ? (
+                        <div><span className="font-semibold">{lang === "id" ? "Akses" : "Access"}:</span> {getAccess(item)}</div>
+                      ) : null}
+                      {getNote(item) ? (
+                        <div><span className="font-semibold">{lang === "id" ? "Catatan" : "Notes"}:</span> {getNote(item)}</div>
+                      ) : null}
                       <div className="mt-3 flex gap-2">
                         <a
                           className="flex-1 text-center rounded-xl bg-slate-900 text-white px-4 py-3 font-bold"
@@ -185,14 +217,16 @@ export default function AccommodationClient() {
                         >
                           {t.common.direction}
                         </a>
-                        <a
-                          className="flex-1 text-center rounded-xl bg-white border border-slate-200 px-4 py-3 font-bold text-slate-900"
-                          href={`https://wa.me/${normalizePhone(item.contact)}`}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          WhatsApp
-                        </a>
+                        {getWhatsapp(item) ? (
+                          <a
+                            className="flex-1 text-center rounded-xl bg-white border border-slate-200 px-4 py-3 font-bold text-slate-900"
+                            href={`https://wa.me/${getWhatsapp(item)}`}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            WhatsApp
+                          </a>
+                        ) : null}
                       </div>
                     </div>
                   </div>
