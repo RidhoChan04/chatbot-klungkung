@@ -1,0 +1,8 @@
+.venv
+venv
+__pycache__
+.git
+.env
+chroma
+*.zip
+*.pdf
