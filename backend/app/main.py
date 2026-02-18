@@ -37,18 +37,13 @@ def health_check():
     return {"status": "ok"}
 
 
-@app.post("/chat", response_model=ChatResponse)
+@app.post("/chat")
 def chat(req: ChatRequest):
-    
-    if not req.question or not req.question.strip():
-        raise HTTPException(status_code=400, detail="Question cannot be empty.")
-
     try:
         answer = rag_chain.invoke(req.question)
-        return ChatResponse(answer=answer)
+        return {"answer": answer}
     except Exception as e:
-        
-        raise HTTPException(
-            status_code=500,
-            detail="RAG processing failed."
-        ) from e
+        import traceback
+        traceback.print_exc()
+        return {"error": str(e)}
+
